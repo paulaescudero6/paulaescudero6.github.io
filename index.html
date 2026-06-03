@@ -3,625 +3,217 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Paula Escudero García — Analista de Ciberseguridad</title>
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<title>Paula Escudero García · Ciberseguridad</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0a0a0f;
-    --bg2: #0f0f1a;
-    --bg3: #141428;
-    --accent: #c0392b;
-    --accent2: #e74c3c;
-    --green: #00ff88;
-    --blue: #4fc3f7;
-    --text: #e8e8f0;
-    --muted: #7a7a9a;
-    --border: rgba(192,57,43,0.25);
-    --mono: 'Space Mono', monospace;
-    --sans: 'Syne', sans-serif;
-    --display: 'Cormorant Garamond', serif;
+    --bg: #060810;
+    --bg2: #0d1120;
+    --bg3: #111827;
+    --accent: #3b82f6;
+    --accent2: #06b6d4;
+    --accent3: #8b5cf6;
+    --green: #34d399;
+    --text: #e2e8f0;
+    --muted: #64748b;
+    --border: rgba(59,130,246,0.15);
   }
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
+  * { margin:0; padding:0; box-sizing:border-box; }
   html { scroll-behavior: smooth; }
+  body { background:var(--bg); color:var(--text); font-family:'Plus Jakarta Sans',sans-serif; overflow-x:hidden; }
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--sans);
-    overflow-x: hidden;
-    cursor: none;
-  }
-
-  /* Custom cursor */
-  .cursor {
-    position: fixed;
-    width: 12px; height: 12px;
-    background: var(--accent);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9999;
-    transition: transform 0.1s ease;
-    mix-blend-mode: difference;
-  }
-  .cursor-ring {
-    position: fixed;
-    width: 36px; height: 36px;
-    border: 1px solid var(--accent);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9998;
-    transition: all 0.18s ease;
-    mix-blend-mode: difference;
-  }
-
-  /* Scanlines overlay */
   body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.04) 2px, rgba(0,0,0,0.04) 4px);
-    pointer-events: none;
-    z-index: 1000;
+    content:''; position:fixed; inset:0;
+    background-image:
+      linear-gradient(rgba(59,130,246,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(59,130,246,0.03) 1px, transparent 1px);
+    background-size:40px 40px; pointer-events:none; z-index:0;
   }
 
   /* NAV */
   nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1.2rem 3rem;
-    background: rgba(10,10,15,0.85);
-    backdrop-filter: blur(16px);
-    border-bottom: 1px solid var(--border);
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    display:flex; justify-content:space-between; align-items:center;
+    padding:20px 60px;
+    background:rgba(6,8,16,0.9); backdrop-filter:blur(20px);
+    border-bottom:1px solid var(--border);
   }
-  .nav-logo {
-    font-family: var(--mono);
-    font-size: 0.85rem;
-    color: var(--accent);
-    letter-spacing: 0.1em;
-  }
-  .nav-links { display: flex; gap: 2rem; }
-  .nav-links a {
-    font-family: var(--mono);
-    font-size: 0.75rem;
-    color: var(--muted);
-    text-decoration: none;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    transition: color 0.2s;
-  }
-  .nav-links a:hover { color: var(--accent); }
+  .nav-logo { font-family:'Space Mono',monospace; font-size:13px; color:var(--accent); letter-spacing:.1em; }
+  .nav-links { display:flex; gap:32px; }
+  .nav-links a { font-size:13px; color:var(--muted); text-decoration:none; letter-spacing:.08em; text-transform:uppercase; font-weight:600; transition:color .2s; }
+  .nav-links a:hover { color:var(--text); }
 
   /* HERO */
-  #hero {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    padding: 8rem 3rem 4rem;
-    position: relative;
-    overflow: hidden;
+  .hero {
+    min-height:100vh; display:flex; flex-direction:column; justify-content:center;
+    padding:120px 60px 80px; position:relative; z-index:1;
+    max-width:1100px; margin:0 auto;
   }
-
-  .hero-grid {
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(192,57,43,0.06) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(192,57,43,0.06) 1px, transparent 1px);
-    background-size: 60px 60px;
-    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black, transparent);
-  }
-
-  .hero-glow {
-    position: absolute;
-    width: 600px; height: 600px;
-    background: radial-gradient(circle, rgba(192,57,43,0.12) 0%, transparent 70%);
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    pointer-events: none;
-  }
-
-  .hero-content {
-    position: relative;
-    z-index: 2;
-    max-width: 900px;
-  }
-
   .hero-tag {
-    font-family: var(--mono);
-    font-size: 0.75rem;
-    color: var(--green);
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    margin-bottom: 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
+    font-family:'Space Mono',monospace; font-size:11px; color:var(--accent2);
+    letter-spacing:.2em; text-transform:uppercase; margin-bottom:24px;
+    display:flex; align-items:center; gap:12px;
   }
-  .hero-tag::before {
-    content: '';
-    width: 40px; height: 1px;
-    background: var(--green);
+  .hero-tag::before { content:''; display:block; width:32px; height:1px; background:var(--accent2); }
+  h1 { font-size:clamp(52px,8vw,96px); font-weight:800; line-height:.95; letter-spacing:-.03em; margin-bottom:32px; }
+  h1 .first { color:var(--text); display:block; }
+  h1 .last { color:transparent; -webkit-text-stroke:1px rgba(226,232,240,0.35); display:block; }
+  .hero-desc { font-size:18px; line-height:1.7; color:var(--muted); max-width:540px; margin-bottom:48px; }
+  .hero-desc strong { color:var(--text); }
+  .hero-btns { display:flex; gap:16px; flex-wrap:wrap; }
+  .btn {
+    display:inline-flex; align-items:center; gap:8px;
+    padding:14px 28px; border-radius:4px;
+    font-family:'Plus Jakarta Sans',sans-serif; font-size:14px; font-weight:700;
+    text-decoration:none; letter-spacing:.05em; text-transform:uppercase;
+    transition:all .2s; cursor:pointer;
   }
-
-  .hero-name {
-    font-family: var(--display);
-    font-size: clamp(4rem, 9vw, 8.5rem);
-    font-weight: 300;
-    line-height: 0.95;
-    letter-spacing: 0.04em;
-    font-style: italic;
-    margin-bottom: 1rem;
-  }
-  .hero-name .last { color: var(--accent); font-style: normal; font-weight: 600; }
-
-  .hero-title {
-    font-family: var(--mono);
-    font-size: clamp(0.9rem, 2vw, 1.1rem);
-    color: var(--muted);
-    margin-bottom: 2rem;
-    letter-spacing: 0.05em;
-  }
-  .hero-title span { color: var(--accent); }
-
-  .hero-desc {
-    font-size: 1.05rem;
-    color: var(--muted);
-    line-height: 1.7;
-    max-width: 550px;
-    margin-bottom: 2.5rem;
-  }
-
-  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
-
-  .btn-primary {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.85rem 2rem;
-    background: var(--accent);
-    color: white;
-    font-family: var(--mono);
-    font-size: 0.8rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    text-decoration: none;
-    border: none;
-    cursor: none;
-    transition: background 0.2s, transform 0.2s;
-    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
-  }
-  .btn-primary:hover { background: var(--accent2); transform: translateY(-2px); }
-
-  .btn-secondary {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.85rem 2rem;
-    background: transparent;
-    color: var(--text);
-    font-family: var(--mono);
-    font-size: 0.8rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    text-decoration: none;
-    border: 1px solid var(--border);
-    cursor: none;
-    transition: border-color 0.2s, color 0.2s, transform 0.2s;
-  }
-  .btn-secondary:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+  .btn-primary { background:var(--accent); color:#fff; border:1px solid var(--accent); }
+  .btn-primary:hover { background:#2563eb; }
+  .btn-ghost { background:transparent; color:var(--text); border:1px solid var(--border); }
+  .btn-ghost:hover { border-color:var(--accent); color:var(--accent); }
 
   .hero-stats {
-    position: absolute;
-    right: 3rem;
-    top: 50%;
-    transform: translateY(-50%);
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    z-index: 2;
+    position:absolute; right:60px; top:50%; transform:translateY(-50%);
+    display:flex; flex-direction:column; gap:28px; z-index:2;
   }
-  .stat {
-    text-align: right;
-    border-right: 2px solid var(--accent);
-    padding-right: 1.2rem;
-  }
-  .stat-num {
-    font-family: var(--mono);
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--accent);
-    line-height: 1;
-  }
-  .stat-label {
-    font-family: var(--mono);
-    font-size: 0.65rem;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-top: 0.2rem;
-  }
+  .stat { text-align:right; border-right:2px solid var(--accent); padding-right:16px; }
+  .stat-num { font-family:'Space Mono',monospace; font-size:28px; font-weight:700; color:var(--accent); line-height:1; }
+  .stat-label { font-family:'Space Mono',monospace; font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:.1em; margin-top:4px; }
+
+  /* DIVIDER */
+  .divider { height:1px; background:var(--border); max-width:1100px; margin:0 auto; position:relative; z-index:1; }
 
   /* SECTIONS */
-  section { padding: 6rem 3rem; }
-
-  .section-header {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    margin-bottom: 3.5rem;
+  section { position:relative; z-index:1; padding:100px 60px; max-width:1100px; margin:0 auto; }
+  .section-label {
+    font-family:'Space Mono',monospace; font-size:11px; color:var(--accent);
+    letter-spacing:.2em; text-transform:uppercase; margin-bottom:16px;
+    display:flex; align-items:center; gap:12px;
   }
-  .section-num {
-    font-family: var(--mono);
-    font-size: 0.7rem;
-    color: var(--accent);
-    letter-spacing: 0.1em;
-  }
-  .section-title {
-    font-family: var(--display);
-    font-size: clamp(2rem, 4vw, 3.2rem);
-    font-weight: 300;
-    letter-spacing: 0.06em;
-    font-style: italic;
-  }
-  .section-line {
-    flex: 1;
-    height: 1px;
-    background: linear-gradient(90deg, var(--border), transparent);
-  }
-
-  /* SOBRE MI */
-  #sobre-mi { background: var(--bg2); }
-  .about-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: start;
-  }
-  .about-text p {
-    color: var(--muted);
-    line-height: 1.8;
-    margin-bottom: 1.2rem;
-    font-size: 1rem;
-  }
-  .about-text p strong { color: var(--text); }
-  .about-terminal {
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    overflow: hidden;
-  }
-  .terminal-bar {
-    background: rgba(192,57,43,0.1);
-    padding: 0.6rem 1rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    border-bottom: 1px solid var(--border);
-  }
-  .terminal-dot {
-    width: 10px; height: 10px;
-    border-radius: 50%;
-  }
-  .terminal-body {
-    padding: 1.5rem;
-    font-family: var(--mono);
-    font-size: 0.78rem;
-    line-height: 1.8;
-  }
-  .t-prompt { color: var(--green); }
-  .t-cmd { color: var(--text); }
-  .t-out { color: var(--muted); }
-  .t-val { color: var(--blue); }
-  .t-acc { color: var(--accent); }
-  .t-cursor {
-    display: inline-block;
-    width: 8px; height: 14px;
-    background: var(--green);
-    vertical-align: middle;
-    animation: blink 1s step-end infinite;
-  }
-  @keyframes blink { 50% { opacity: 0; } }
+  .section-label::before { content:''; display:block; width:24px; height:1px; background:var(--accent); }
+  h2 { font-size:clamp(32px,5vw,52px); font-weight:800; letter-spacing:-.02em; line-height:1.1; margin-bottom:56px; }
 
   /* SKILLS */
-  #habilidades { background: var(--bg); }
-  .skills-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
-  }
-  .skill-card {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    padding: 1.8rem;
-    position: relative;
-    transition: border-color 0.3s, transform 0.3s;
-    clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
-  }
-  .skill-card:hover { border-color: var(--accent); transform: translateY(-4px); }
-  .skill-card-icon {
-    font-size: 1.8rem;
-    margin-bottom: 1rem;
-  }
-  .skill-card-title {
-    font-size: 1rem;
-    font-weight: 700;
-    margin-bottom: 0.8rem;
-    color: var(--text);
-  }
-  .skill-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-  }
+  .skills-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:1px; background:var(--border); border:1px solid var(--border); }
+  .skill-card { background:var(--bg2); padding:28px; transition:background .2s; }
+  .skill-card:hover { background:var(--bg3); }
+  .skill-icon { font-size:26px; margin-bottom:14px; display:block; }
+  .skill-card h3 { font-size:13px; font-weight:700; margin-bottom:14px; letter-spacing:.05em; text-transform:uppercase; color:var(--text); }
+  .skill-tags { display:flex; flex-wrap:wrap; gap:6px; }
   .tag {
-    font-family: var(--mono);
-    font-size: 0.65rem;
-    color: var(--accent);
-    border: 1px solid rgba(192,57,43,0.3);
-    padding: 0.2rem 0.5rem;
-    letter-spacing: 0.05em;
-    background: rgba(192,57,43,0.05);
+    font-family:'Space Mono',monospace; font-size:10px; padding:4px 9px;
+    background:rgba(59,130,246,0.08); border:1px solid rgba(59,130,246,0.2);
+    color:var(--accent2); border-radius:2px;
   }
 
-  /* PROYECTOS */
-  #proyectos { background: var(--bg2); }
-  .projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-    gap: 2rem;
-  }
+  /* PROJECTS */
+  .projects-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:24px; }
   .project-card {
-    background: var(--bg);
-    border: 1px solid var(--border);
-    padding: 2rem;
-    position: relative;
-    transition: border-color 0.3s, transform 0.3s;
-    overflow: hidden;
+    background:var(--bg2); border:1px solid var(--border); border-radius:4px;
+    overflow:hidden; transition:border-color .2s, transform .2s; position:relative;
   }
   .project-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, var(--accent), transparent);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.4s ease;
+    content:''; position:absolute; top:0; left:0; right:0; height:2px;
+    background:linear-gradient(90deg, var(--accent), var(--accent2));
+    transform:scaleX(0); transform-origin:left; transition:transform .4s ease;
   }
-  .project-card:hover { border-color: var(--accent); transform: translateY(-4px); }
-  .project-card:hover::before { transform: scaleX(1); }
+  .project-card:hover { border-color:var(--accent); transform:translateY(-4px); }
+  .project-card:hover::before { transform:scaleX(1); }
+  .project-card.featured { grid-column:1/-1; display:grid; grid-template-columns:1.2fr 1fr; }
+  .project-header { padding:28px 28px 0; display:flex; justify-content:space-between; align-items:flex-start; }
+  .project-num { font-family:'Space Mono',monospace; font-size:11px; color:var(--muted); }
+  .project-badges { display:flex; gap:6px; flex-wrap:wrap; }
+  .badge {
+    font-family:'Space Mono',monospace; font-size:10px; padding:3px 8px;
+    border-radius:2px; border:1px solid; font-weight:700; text-transform:uppercase; letter-spacing:.06em;
+  }
+  .b-blue { color:var(--accent); border-color:rgba(59,130,246,.3); background:rgba(59,130,246,.08); }
+  .b-cyan { color:var(--accent2); border-color:rgba(6,182,212,.3); background:rgba(6,182,212,.08); }
+  .b-purple { color:#a78bfa; border-color:rgba(139,92,246,.3); background:rgba(139,92,246,.08); }
+  .b-green { color:var(--green); border-color:rgba(52,211,153,.3); background:rgba(52,211,153,.08); }
+  .b-orange { color:#fb923c; border-color:rgba(251,146,60,.3); background:rgba(251,146,60,.08); }
 
-  .project-card.featured {
-    grid-column: 1 / -1;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-    align-items: start;
+  .project-body { padding:22px 28px 28px; }
+  .project-card h3 { font-size:18px; font-weight:700; margin-bottom:10px; line-height:1.3; letter-spacing:-.01em; }
+  .project-desc { font-size:14px; color:var(--muted); line-height:1.7; margin-bottom:18px; }
+  .project-stack { display:flex; flex-wrap:wrap; gap:6px; padding-top:16px; border-top:1px solid var(--border); }
+  .stack-pill {
+    font-family:'Space Mono',monospace; font-size:10px; color:var(--muted);
+    padding:4px 8px; background:rgba(255,255,255,.03);
+    border:1px solid rgba(255,255,255,.06); border-radius:2px;
   }
-  .project-num {
-    font-family: var(--mono);
-    font-size: 0.65rem;
-    color: var(--accent);
-    letter-spacing: 0.1em;
-    margin-bottom: 0.8rem;
-  }
-  .project-title {
-    font-size: 1.3rem;
-    font-weight: 700;
-    margin-bottom: 0.6rem;
-  }
-  .project-desc {
-    color: var(--muted);
-    font-size: 0.9rem;
-    line-height: 1.7;
-    margin-bottom: 1.2rem;
-  }
-  .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.2rem; }
-  .project-links { display: flex; gap: 1rem; }
-  .project-link {
-    font-family: var(--mono);
-    font-size: 0.7rem;
-    color: var(--accent);
-    text-decoration: none;
-    letter-spacing: 0.05em;
-    display: flex;
-    align-items: center;
-    gap: 0.3rem;
-    border-bottom: 1px solid transparent;
-    transition: border-color 0.2s;
-  }
-  .project-link:hover { border-color: var(--accent); }
+  /* featured side details */
+  .project-details { padding:28px 28px 28px 0; border-left:1px solid var(--border); padding-left:28px; }
+  .project-details h4 { font-family:'Space Mono',monospace; font-size:10px; color:var(--accent); text-transform:uppercase; letter-spacing:.1em; margin-bottom:14px; }
+  .project-details ul { list-style:none; display:flex; flex-direction:column; gap:10px; }
+  .project-details li { font-size:13px; color:var(--muted); padding-left:16px; position:relative; line-height:1.5; }
+  .project-details li::before { content:'>'; position:absolute; left:0; color:var(--accent); font-family:'Space Mono',monospace; }
 
-  .project-details ul {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
-  }
-  .project-details li {
-    font-family: var(--mono);
-    font-size: 0.78rem;
-    color: var(--muted);
-    padding-left: 1.2rem;
-    position: relative;
-    line-height: 1.5;
-  }
-  .project-details li::before {
-    content: '>';
-    position: absolute;
-    left: 0;
-    color: var(--accent);
+  /* EDUCATION */
+  .edu-list { display:flex; flex-direction:column; }
+  .edu-item { display:grid; grid-template-columns:1fr auto; align-items:start; gap:24px; padding:32px 0; border-bottom:1px solid var(--border); }
+  .edu-item:first-child { border-top:1px solid var(--border); }
+  .edu-degree { font-size:18px; font-weight:700; margin-bottom:6px; }
+  .edu-school { font-size:14px; color:var(--muted); }
+  .edu-year { font-family:'Space Mono',monospace; font-size:12px; color:var(--accent); white-space:nowrap; padding-top:4px; }
+  .edu-badge {
+    display:inline-block; margin-top:10px;
+    font-family:'Space Mono',monospace; font-size:10px; color:var(--green);
+    border:1px solid rgba(52,211,153,.3); background:rgba(52,211,153,.08);
+    padding:3px 10px; border-radius:2px; text-transform:uppercase; letter-spacing:.1em;
   }
 
-  /* FORMACION */
-  #formacion { background: var(--bg); }
-  .timeline { display: flex; flex-direction: column; gap: 0; }
-  .timeline-item {
-    display: grid;
-    grid-template-columns: 180px 1px 1fr;
-    gap: 0 2rem;
-    position: relative;
-  }
-  .timeline-date {
-    font-family: var(--mono);
-    font-size: 0.75rem;
-    color: var(--accent);
-    text-align: right;
-    padding: 2rem 0;
-    letter-spacing: 0.05em;
-  }
-  .timeline-line {
-    width: 1px;
-    background: var(--border);
-    position: relative;
-  }
-  .timeline-dot {
-    position: absolute;
-    top: 2rem;
-    left: 50%;
-    transform: translate(-50%, 0);
-    width: 10px; height: 10px;
-    background: var(--accent);
-    border-radius: 50%;
-    box-shadow: 0 0 12px var(--accent);
-  }
-  .timeline-content { padding: 2rem 0; }
-  .timeline-title {
-    font-size: 1.1rem;
-    font-weight: 700;
-    margin-bottom: 0.2rem;
-  }
-  .timeline-sub {
-    font-family: var(--mono);
-    font-size: 0.75rem;
-    color: var(--accent);
-    margin-bottom: 0.8rem;
-    font-style: italic;
-  }
-  .timeline-desc {
-    color: var(--muted);
-    font-size: 0.88rem;
-    line-height: 1.7;
-  }
-
-  /* CONTACTO */
-  #contacto {
-    background: var(--bg2);
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-  #contacto::before {
-    content: 'CONTACT';
-    position: absolute;
-    font-size: 15vw;
-    font-weight: 800;
-    color: rgba(192,57,43,0.04);
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    pointer-events: none;
-    white-space: nowrap;
-  }
-  .contact-subtitle {
-    font-family: var(--mono);
-    font-size: 0.85rem;
-    color: var(--muted);
-    margin-bottom: 3rem;
-    letter-spacing: 0.05em;
-  }
-  .contact-email {
-    font-family: var(--display);
-    font-size: clamp(1.8rem, 4vw, 3rem);
-    font-weight: 300;
-    font-style: italic;
-    letter-spacing: 0.04em;
-    color: var(--text);
-    text-decoration: none;
-    border-bottom: 1px solid var(--accent);
-    padding-bottom: 0.2rem;
-    transition: color 0.2s;
-    display: inline-block;
-    margin-bottom: 3rem;
-  }
-  .contact-email:hover { color: var(--accent); }
-  .contact-links {
-    display: flex;
-    justify-content: center;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-  }
+  /* CONTACT */
+  .contact-wrapper { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; }
+  .contact-left p { font-size:16px; color:var(--muted); line-height:1.8; margin-bottom:40px; }
+  .contact-links { display:flex; flex-direction:column; gap:14px; }
   .contact-link {
-    font-family: var(--mono);
-    font-size: 0.75rem;
-    color: var(--muted);
-    text-decoration: none;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    border: 1px solid var(--border);
-    padding: 0.7rem 1.3rem;
-    transition: all 0.2s;
+    display:flex; align-items:center; gap:16px; padding:16px 20px;
+    background:var(--bg2); border:1px solid var(--border); border-radius:4px;
+    text-decoration:none; color:var(--text); transition:border-color .2s, background .2s;
+    font-size:14px; font-weight:600;
   }
-  .contact-link:hover { color: var(--accent); border-color: var(--accent); }
+  .contact-link:hover { border-color:var(--accent); background:var(--bg3); }
+  .contact-icon { font-size:18px; min-width:24px; text-align:center; }
+  .contact-detail { font-size:12px; color:var(--muted); margin-top:2px; font-weight:400; }
+
+  /* TERMINAL */
+  .terminal { background:var(--bg2); border:1px solid var(--border); border-radius:8px; overflow:hidden; font-family:'Space Mono',monospace; }
+  .terminal-bar { background:#1e2535; padding:12px 16px; display:flex; align-items:center; gap:8px; }
+  .dot { width:12px; height:12px; border-radius:50%; }
+  .dot-r { background:#ff5f57; } .dot-y { background:#ffbd2e; } .dot-g { background:#28c940; }
+  .terminal-title { font-size:11px; color:var(--muted); margin-left:8px; }
+  .terminal-body { padding:24px; font-size:12px; line-height:2; }
+  .t-comment { color:#475569; } .t-cmd { color:var(--accent2); } .t-output { color:var(--green); } .t-path { color:var(--accent); }
+  .t-cursor { display:inline-block; width:8px; height:14px; background:var(--accent2); vertical-align:middle; animation:blink 1s step-end infinite; }
+  @keyframes blink { 50% { opacity:0; } }
 
   /* FOOTER */
-  footer {
-    background: var(--bg);
-    border-top: 1px solid var(--border);
-    padding: 1.5rem 3rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  footer span {
-    font-family: var(--mono);
-    font-size: 0.7rem;
-    color: var(--muted);
-    letter-spacing: 0.05em;
-  }
-  footer .accent { color: var(--accent); }
+  footer { border-top:1px solid var(--border); padding:28px 60px; display:flex; justify-content:space-between; align-items:center; position:relative; z-index:1; font-size:12px; color:var(--muted); font-family:'Space Mono',monospace; max-width:1100px; margin:0 auto; }
 
-  /* ANIMATIONS */
-  .fade-up {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-  }
-  .fade-up.visible { opacity: 1; transform: translateY(0); }
+  /* ANIM */
+  .fade-up { opacity:0; transform:translateY(24px); transition:opacity .6s ease, transform .6s ease; }
+  .fade-up.visible { opacity:1; transform:translateY(0); }
 
-  @media (max-width: 768px) {
-    nav { padding: 1rem 1.5rem; }
-    .nav-links { display: none; }
-    section { padding: 4rem 1.5rem; }
-    #hero { padding: 7rem 1.5rem 3rem; }
-    .hero-stats { display: none; }
-    .about-grid { grid-template-columns: 1fr; }
-    .project-card.featured { grid-template-columns: 1fr; grid-column: auto; }
-    .timeline-item { grid-template-columns: 100px 1px 1fr; gap: 0 1rem; }
-    footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+  @media(max-width:768px) {
+    nav { padding:16px 24px; } .nav-links { display:none; }
+    .hero { padding:100px 24px 60px; } .hero-stats { display:none; }
+    section { padding:60px 24px; }
+    .project-card.featured { grid-template-columns:1fr; }
+    .project-details { border-left:none; border-top:1px solid var(--border); padding-left:0; padding-top:20px; }
+    .contact-wrapper { grid-template-columns:1fr; gap:40px; }
+    footer { padding:24px; flex-direction:column; gap:8px; text-align:center; }
   }
 </style>
 </head>
 <body>
 
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursorRing"></div>
-
-<!-- NAV -->
 <nav>
-  <div class="nav-logo">paula_escudero.sh</div>
+  <div class="nav-logo">PEG · SEC</div>
   <div class="nav-links">
-    <a href="#sobre-mi">Sobre mí</a>
-    <a href="#habilidades">Skills</a>
+    <a href="#skills">Skills</a>
     <a href="#proyectos">Proyectos</a>
     <a href="#formacion">Formación</a>
     <a href="#contacto">Contacto</a>
@@ -629,339 +221,402 @@
 </nav>
 
 <!-- HERO -->
-<section id="hero">
-  <div class="hero-grid"></div>
-  <div class="hero-glow"></div>
-  <div class="hero-content">
-    <div class="hero-tag">Analista de Ciberseguridad Jr. · Sevilla, España</div>
-    <h1 class="hero-name">
-      Paula<br>
-      <span class="last">Escudero</span>
-    </h1>
-    <p class="hero-title">
-      <span>~/</span> Desarrollo web seguro · Pentesting · Análisis de vulnerabilidades
-    </p>
-    <p class="hero-desc">
-      Titulada en DAW con Máster en Ciberseguridad. Combino mi base en desarrollo web con una visión ofensiva y defensiva de la seguridad. Construir y proteger, desde el primer día.
-    </p>
-    <div class="hero-btns">
-      <a href="#proyectos" class="btn-primary">Ver proyectos →</a>
-      <a href="#contacto" class="btn-secondary">Contactar</a>
-    </div>
+<div style="position:relative;z-index:1;">
+<div class="hero">
+  <div class="hero-tag fade-up">Analista de Ciberseguridad Jr. · Sevilla</div>
+  <h1>
+    <span class="first fade-up" style="animation-delay:.1s">Paula</span>
+    <span class="last fade-up" style="animation-delay:.2s">Escudero</span>
+  </h1>
+  <p class="hero-desc fade-up" style="animation-delay:.3s">
+    Máster en Ciberseguridad + base en <strong>Desarrollo Web</strong>. Detección de amenazas, monitorización, IDS y bastionado de sistemas. Construir y proteger, desde el primer día.
+  </p>
+  <div class="hero-btns fade-up" style="animation-delay:.4s">
+    <a href="#proyectos" class="btn btn-primary">Ver proyectos →</a>
+    <a href="#contacto" class="btn btn-ghost">Contactar</a>
   </div>
-  <div class="hero-stats">
-    <div class="stat">
-      <div class="stat-num">2+</div>
-      <div class="stat-label">años en DAW</div>
-    </div>
-    <div class="stat">
-      <div class="stat-num">10+</div>
-      <div class="stat-label">herramientas</div>
-    </div>
-    <div class="stat">
-      <div class="stat-num">B2</div>
-      <div class="stat-label">inglés</div>
-    </div>
-  </div>
-</section>
 
-<!-- SOBRE MÍ -->
-<section id="sobre-mi">
-  <div class="section-header fade-up">
-    <span class="section-num">01</span>
-    <h2 class="section-title">Sobre mí</h2>
-    <div class="section-line"></div>
+  <div class="hero-stats fade-up" style="animation-delay:.5s">
+    <div class="stat"><div class="stat-num">7+</div><div class="stat-label">Proyectos</div></div>
+    <div class="stat"><div class="stat-num">15+</div><div class="stat-label">Herramientas</div></div>
+    <div class="stat"><div class="stat-num">B2</div><div class="stat-label">Inglés</div></div>
   </div>
-  <div class="about-grid">
-    <div class="about-text fade-up">
-      <p>Soy <strong>Paula Escudero García</strong>, analista de ciberseguridad junior con base en Sevilla. Mi camino empezó en el desarrollo web — APIs, bases de datos, arquitecturas cliente-servidor — y la curiosidad por proteger lo que construía me llevó al mundo de la seguridad.</p>
-      <p>Actualmente estoy finalizando un <strong>Máster en Ciberseguridad</strong> en la Cámara de Comercio de Sevilla, donde trabajo con herramientas como Kali Linux, GNS3, Docker o Burp Suite en entornos de laboratorio reales.</p>
-      <p>Me interesa especialmente la <strong>seguridad en aplicaciones web</strong> y el análisis de vulnerabilidades — áreas donde mi background en desarrollo me da una ventaja real: entiendo cómo se construye y sé dónde se rompe.</p>
-      <a href="CV_Paula_Escudero.pdf" class="btn-secondary" style="margin-top:1.5rem; display:inline-flex;">Descargar CV →</a>
-    </div>
-    <div class="about-terminal fade-up">
-      <div class="terminal-bar">
-        <div class="terminal-dot" style="background:#ff5f57"></div>
-        <div class="terminal-dot" style="background:#febc2e"></div>
-        <div class="terminal-dot" style="background:#28c840"></div>
-        <span style="font-family:var(--mono);font-size:0.7rem;color:var(--muted);margin-left:0.5rem">paula@kali:~</span>
-      </div>
-      <div class="terminal-body">
-        <div><span class="t-prompt">paula@kali</span><span class="t-cmd">:~$ </span><span class="t-cmd">whoami --detail</span></div>
-        <div class="t-out" style="margin-top:0.5rem">
-          <div><span class="t-out">nombre    </span><span class="t-val">Paula Escudero García</span></div>
-          <div><span class="t-out">rol       </span><span class="t-val">Analista Ciberseguridad Jr.</span></div>
-          <div><span class="t-out">ubicación </span><span class="t-val">Sevilla, España</span></div>
-          <div><span class="t-out">inglés    </span><span class="t-val">B2 (Aptis ESOL)</span></div>
-          <div><span class="t-out">estado    </span><span class="t-acc">open_to_work: true</span></div>
-        </div>
-        <div style="margin-top:0.8rem"><span class="t-prompt">paula@kali</span><span class="t-cmd">:~$ </span><span class="t-cmd">cat intereses.txt</span></div>
-        <div style="margin-top:0.5rem">
-          <div class="t-val">· Pentesting web (OWASP Top 10)</div>
-          <div class="t-val">· Análisis de vulnerabilidades</div>
-          <div class="t-val">· Seguridad en redes</div>
-          <div class="t-val">· DevSecOps</div>
-        </div>
-        <div style="margin-top:0.8rem"><span class="t-prompt">paula@kali</span><span class="t-cmd">:~$ </span><span class="t-cursor"></span></div>
-      </div>
-    </div>
-  </div>
-</section>
+</div>
+</div>
 
-<!-- HABILIDADES -->
-<section id="habilidades">
-  <div class="section-header fade-up">
-    <span class="section-num">02</span>
-    <h2 class="section-title">Habilidades</h2>
-    <div class="section-line"></div>
-  </div>
+<div class="divider"></div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label">Stack técnico</div>
+  <h2>Habilidades</h2>
   <div class="skills-grid">
     <div class="skill-card fade-up">
-      <div class="skill-card-icon">🔴</div>
-      <div class="skill-card-title">Seguridad Ofensiva</div>
+      <span class="skill-icon">🔍</span>
+      <h3>SOC & Monitorización</h3>
       <div class="skill-tags">
-        <span class="tag">Kali Linux</span>
-        <span class="tag">Burp Suite</span>
-        <span class="tag">Metasploit</span>
-        <span class="tag">Nmap</span>
-        <span class="tag">OWASP Top 10</span>
-        <span class="tag">SQLi / XSS</span>
-        <span class="tag">TryHackMe</span>
-        <span class="tag">HackTheBox</span>
+        <span class="tag">Grafana</span><span class="tag">InfluxDB</span>
+        <span class="tag">Prometheus</span><span class="tag">Telegraf</span>
+        <span class="tag">ELK Stack</span><span class="tag">Elastic Agent</span>
+        <span class="tag">Wazuh</span><span class="tag">Loki</span><span class="tag">SIEM</span>
       </div>
     </div>
     <div class="skill-card fade-up">
-      <div class="skill-card-icon">🛡️</div>
-      <div class="skill-card-title">Seguridad Defensiva</div>
+      <span class="skill-icon">🛡️</span>
+      <h3>IDS & Análisis de red</h3>
       <div class="skill-tags">
-        <span class="tag">Fail2ban</span>
-        <span class="tag">Wireshark</span>
-        <span class="tag">Grafana + Loki</span>
-        <span class="tag">Monitorización</span>
-        <span class="tag">Hardening</span>
-        <span class="tag">Criptografía</span>
+        <span class="tag">Snort</span><span class="tag">Wireshark</span>
+        <span class="tag">SNMP</span><span class="tag">gNMI</span>
+        <span class="tag">Nmap</span><span class="tag">Nikto</span>
+        <span class="tag">Netplan</span><span class="tag">UFW / iptables</span>
       </div>
     </div>
     <div class="skill-card fade-up">
-      <div class="skill-card-icon">🌐</div>
-      <div class="skill-card-title">Redes e Infraestructura</div>
+      <span class="skill-icon">🔐</span>
+      <h3>Pentesting & Ofensivo</h3>
       <div class="skill-tags">
-        <span class="tag">GNS3</span>
-        <span class="tag">Docker</span>
-        <span class="tag">XAMPP</span>
-        <span class="tag">TCP/IP</span>
-        <span class="tag">Máquinas virtuales</span>
-        <span class="tag">Linux / Windows</span>
-        <span class="tag">Azure</span>
+        <span class="tag">Kali Linux</span><span class="tag">Burp Suite</span>
+        <span class="tag">Metasploit</span><span class="tag">OWASP Top 10</span>
+        <span class="tag">SQLi</span><span class="tag">XSS / CSRF</span>
+        <span class="tag">DVWA</span><span class="tag">CVSS</span>
+        <span class="tag">Gophish</span><span class="tag">Ingeniería Social</span>
       </div>
     </div>
     <div class="skill-card fade-up">
-      <div class="skill-card-icon">💻</div>
-      <div class="skill-card-title">Desarrollo Web</div>
+      <span class="skill-icon">🔒</span>
+      <h3>Hardening & Bastionado</h3>
       <div class="skill-tags">
-        <span class="tag">Laravel</span>
-        <span class="tag">Angular</span>
-        <span class="tag">PHP</span>
-        <span class="tag">MariaDB</span>
-        <span class="tag">APIs REST</span>
-        <span class="tag">Git / GitHub</span>
+        <span class="tag">SSH / PKI / CA</span><span class="tag">Certificados x509</span>
+        <span class="tag">KRL</span><span class="tag">Fail2ban</span>
+        <span class="tag">CIS Benchmarks</span><span class="tag">Criptografía</span>
+        <span class="tag">PasswordSafe</span><span class="tag">Autopsy</span><span class="tag">Forense digital</span>
+      </div>
+    </div>
+    <div class="skill-card fade-up">
+      <span class="skill-icon">⚙️</span>
+      <h3>Infraestructura</h3>
+      <div class="skill-tags">
+        <span class="tag">Docker</span><span class="tag">GNS3</span>
+        <span class="tag">Linux (Ubuntu/Kali/SONiC)</span>
+        <span class="tag">Windows Server</span>
+        <span class="tag">VirtualBox</span><span class="tag">Azure</span>
+        <span class="tag">Bash / Terminal</span>
+      </div>
+    </div>
+    <div class="skill-card fade-up">
+      <span class="skill-icon">💻</span>
+      <h3>Desarrollo Web</h3>
+      <div class="skill-tags">
+        <span class="tag">Laravel</span><span class="tag">Angular</span>
+        <span class="tag">PHP</span><span class="tag">MariaDB / MySQL</span>
+        <span class="tag">APIs REST</span><span class="tag">Git / GitHub</span>
         <span class="tag">HTML / CSS / JS</span>
       </div>
     </div>
-    <div class="skill-card fade-up">
-      <div class="skill-card-icon">⚙️</div>
-      <div class="skill-card-title">Scripting y Automatización</div>
-      <div class="skill-tags">
-        <span class="tag">Bash</span>
-        <span class="tag">Terminal Linux</span>
-        <span class="tag">Scripts de auditoría</span>
-        <span class="tag">SQL</span>
-      </div>
-    </div>
-    <div class="skill-card fade-up">
-      <div class="skill-card-icon">📋</div>
-      <div class="skill-card-title">Metodología y Documentación</div>
-      <div class="skill-tags">
-        <span class="tag">Informes de auditoría</span>
-        <span class="tag">Análisis CVSS</span>
-        <span class="tag">Metodología OWASP</span>
-        <span class="tag">Write-ups</span>
-      </div>
-    </div>
   </div>
 </section>
 
+<div class="divider"></div>
+
 <!-- PROYECTOS -->
 <section id="proyectos">
-  <div class="section-header fade-up">
-    <span class="section-num">03</span>
-    <h2 class="section-title">Proyectos</h2>
-    <div class="section-line"></div>
-  </div>
+  <div class="section-label">Portfolio técnico</div>
+  <h2>Proyectos</h2>
   <div class="projects-grid">
-    <!-- Featured project -->
+
+    <!-- FEATURED — TFM -->
     <div class="project-card featured fade-up">
       <div>
-        <div class="project-num">// PROYECTO PRINCIPAL</div>
-        <h3 class="project-title">Auditoría de Seguridad Web — DVWA</h3>
-        <p class="project-desc">Auditoría completa sobre Damn Vulnerable Web App desplegada en Docker. Metodología OWASP Top 10 con informe profesional de hallazgos, severidad CVSS y recomendaciones de mitigación.</p>
-        <div class="project-tags">
-          <span class="tag">Docker</span>
-          <span class="tag">Kali Linux</span>
-          <span class="tag">Burp Suite</span>
-          <span class="tag">OWASP Top 10</span>
-          <span class="tag">CVSS</span>
-          <span class="tag">SQLi</span>
-          <span class="tag">XSS</span>
+        <div class="project-header" style="padding-bottom:20px">
+          <span class="project-num">01 · DESTACADO · TFM</span>
+          <div class="project-badges">
+            <span class="badge b-blue">Zero Trust</span>
+            <span class="badge b-cyan">SIEM</span>
+            <span class="badge b-green">Hardening</span>
+          </div>
         </div>
-        <div class="project-links">
-          <a href="https://github.com/paulaescudero6/dvwa-audit" class="project-link" target="_blank">→ GitHub</a>
-          <a href="#" class="project-link">→ Ver informe PDF</a>
+        <div class="project-body" style="padding-top:0">
+          <h3>Sistema de Control de Acceso — Modelo Zero Trust</h3>
+          <p class="project-desc">Trabajo de Fin de Máster. Diseño e implementación de una arquitectura Zero Trust completa sobre entorno virtualizado Linux, usando exclusivamente herramientas open source. Validado mediante seis escenarios reales: accesos legítimos con MFA, reconocimiento de red, ataques de fuerza bruta y detección SIEM.</p>
+          <div class="project-stack">
+            <span class="stack-pill">OpenSSH</span><span class="stack-pill">MFA / TOTP</span>
+            <span class="stack-pill">Fail2ban</span><span class="stack-pill">Wazuh SIEM</span>
+            <span class="stack-pill">rsyslog</span><span class="stack-pill">UFW / iptables</span>
+            <span class="stack-pill">MITRE ATT&amp;CK</span><span class="stack-pill">VMware</span>
+            <span class="stack-pill">Ubuntu Server</span><span class="stack-pill">Hydra</span><span class="stack-pill">Nmap</span>
+          </div>
         </div>
       </div>
       <div class="project-details">
+        <h4>Lo que hice</h4>
         <ul>
-          <li>Despliegue de entorno vulnerable DVWA con Docker + Kali Linux como atacante</li>
-          <li>Identificación de vulnerabilidades: SQL Injection, XSS, CSRF, Broken Auth</li>
-          <li>Análisis con Burp Suite, Nmap y Nikto</li>
-          <li>Informe profesional con evidencias, severidad CVSS y remediaciones</li>
-          <li>Documentación publicada en GitHub como write-up</li>
+          <li>Infraestructura de 3 VMs: servidor protegido, central SIEM y nodo atacante</li>
+          <li>Hardening SSH: autenticación por clave pública + MFA con TOTP (RFC 6238)</li>
+          <li>Cortafuegos UFW con política deny-by-default en todas las máquinas</li>
+          <li>Respuesta automática ante ataques con Fail2ban (bloqueo tras 3 intentos)</li>
+          <li>Centralización de logs en tiempo real con rsyslog en nodo independiente</li>
+          <li>Despliegue de Wazuh SIEM/XDR con correlación y alertas MITRE ATT&amp;CK</li>
+          <li>Validación con ataques reales: fuerza bruta con Hydra, reconocimiento con Nmap</li>
         </ul>
       </div>
     </div>
 
-    <!-- Proyecto 2 -->
-    <div class="project-card fade-up">
-      <div class="project-num">// PROYECTO 02</div>
-      <h3 class="project-title">Laboratorio de Redes con GNS3</h3>
-      <p class="project-desc">Diseño y simulación de topologías de red con GNS3. Configuración de routers, switches y análisis de tráfico en entornos controlados.</p>
-      <div class="project-tags">
-        <span class="tag">GNS3</span>
-        <span class="tag">Wireshark</span>
-        <span class="tag">TCP/IP</span>
-        <span class="tag">Routing</span>
+    <!-- P2 — antes DESTACADO -->
+    <div class="project-card featured fade-up">
+      <div>
+        <div class="project-header" style="padding-bottom:20px">
+          <span class="project-num">02 · DESTACADO</span>
+          <div class="project-badges">
+            <span class="badge b-cyan">SOC</span>
+            <span class="badge b-blue">Monitoring</span>
+          </div>
+        </div>
+        <div class="project-body" style="padding-top:0">
+          <h3>Monitorización SNMP/gNMI — SONiC + Grafana Stack</h3>
+          <p class="project-desc">Sistema de monitorización híbrido sobre switch Enterprise SONiC en GNS3. Stack completo con Docker: Telegraf recoge datos por gNMI, los envía a InfluxDB y Grafana los visualiza en tiempo real. Análisis comparativo entre SNMP (pull) y gNMI (streaming).</p>
+          <div class="project-stack">
+            <span class="stack-pill">GNS3</span><span class="stack-pill">Docker</span>
+            <span class="stack-pill">InfluxDB</span><span class="stack-pill">Grafana</span>
+            <span class="stack-pill">Prometheus</span><span class="stack-pill">Telegraf</span>
+            <span class="stack-pill">SONiC</span><span class="stack-pill">SNMP</span><span class="stack-pill">gNMI</span>
+          </div>
+        </div>
       </div>
-      <div class="project-links">
-        <a href="https://github.com/paulaescudero" class="project-link" target="_blank">→ GitHub</a>
+      <div class="project-details">
+        <h4>Lo que hice</h4>
+        <ul>
+          <li>Topología GNS3 con switch SONiC + Ubuntu Server</li>
+          <li>Configuración de interfaces de gestión y comunidad SNMP</li>
+          <li>Despliegue de Grafana, Prometheus e InfluxDB con Docker Compose</li>
+          <li>Configuración de Telegraf con plugin gNMI apuntando al switch</li>
+          <li>Base de datos sonic_telemetry en InfluxDB y datasources en Grafana</li>
+          <li>Dashboard funcional con métricas de tráfico y recursos en tiempo real</li>
+          <li>Análisis comparativo SNMP vs gNMI: latencia, eficiencia y escalabilidad</li>
+        </ul>
       </div>
     </div>
 
-    <!-- Proyecto 3 -->
+    <!-- P3 -->
     <div class="project-card fade-up">
-      <div class="project-num">// PROYECTO 03</div>
-      <h3 class="project-title">Monitorización con Grafana + Loki</h3>
-      <p class="project-desc">Sistema de monitorización y análisis de logs con Grafana y Loki. Configuración de alertas y dashboards para detección de anomalías.</p>
-      <div class="project-tags">
-        <span class="tag">Grafana</span>
-        <span class="tag">Loki</span>
-        <span class="tag">Docker</span>
-        <span class="tag">Logs</span>
+      <div class="project-header">
+        <span class="project-num">03</span>
+        <div class="project-badges">
+          <span class="badge b-purple">IDS</span><span class="badge b-cyan">ELK</span>
+        </div>
       </div>
-      <div class="project-links">
-        <a href="https://github.com/paulaescudero" class="project-link" target="_blank">→ GitHub</a>
+      <div class="project-body">
+        <h3>IDS Snort + ELK Stack — Detección de Intrusiones</h3>
+        <p class="project-desc">Topología GNS3 con Snort en modo bridge como barrera física antes del servidor WordPress/LAMP. Detección de BAD-TRAFFIC en tiempo real. Integración con Elastic Agent + ELK Cloud para centralización y correlación de logs.</p>
+        <div class="project-stack">
+          <span class="stack-pill">GNS3</span><span class="stack-pill">Snort IDS</span>
+          <span class="stack-pill">ELK Stack</span><span class="stack-pill">Elastic Agent</span>
+          <span class="stack-pill">WordPress</span><span class="stack-pill">LAMP</span>
+          <span class="stack-pill">Linux Bridge</span><span class="stack-pill">UFW</span>
+        </div>
       </div>
     </div>
+
+    <!-- P4 -->
+    <div class="project-card fade-up">
+      <div class="project-header">
+        <span class="project-num">04</span>
+        <div class="project-badges">
+          <span class="badge b-green">Hardening</span><span class="badge b-blue">SSH</span>
+        </div>
+      </div>
+      <div class="project-body">
+        <h3>Autenticación SSH con Certificados + Revocación KRL</h3>
+        <p class="project-desc">Implementación completa de PKI para SSH: creación de CA, firma de certificados de usuario con fecha de expiración, configuración de TrustedUserCAKeys y sistema de revocación instantánea mediante Key Revocation List sin borrar cuentas.</p>
+        <div class="project-stack">
+          <span class="stack-pill">OpenSSH</span><span class="stack-pill">PKI / CA</span>
+          <span class="stack-pill">ssh-keygen</span><span class="stack-pill">KRL</span>
+          <span class="stack-pill">Ubuntu Server</span><span class="stack-pill">sshd_config</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- P5 -->
+    <div class="project-card fade-up">
+      <div class="project-header">
+        <span class="project-num">05</span>
+        <div class="project-badges">
+          <span class="badge b-orange">Phishing</span><span class="badge b-purple">Red Team</span>
+        </div>
+      </div>
+      <div class="project-body">
+        <h3>Phishing Simulation Platform — Gophish + Tailscale</h3>
+        <p class="project-desc">Plataforma de entrenamiento en ingeniería social para auditar el factor humano en organizaciones. Infraestructura sobre VPN mesh con Tailscale (WireGuard), servidor de campañas Gophish y sumidero SMTP MailHog. Campaña real con spoofing de remitente, píxel de rastreo invisible y URLs únicas por destinatario. Script Python para extracción forense vía API REST, hashing SHA-256 de credenciales y generación automatizada de logs. Proyecto Intermodular — Máster Ciberseguridad 2025-2026.</p>
+        <div class="project-stack">
+          <span class="stack-pill">Gophish</span><span class="stack-pill">Tailscale</span>
+          <span class="stack-pill">WireGuard</span><span class="stack-pill">MailHog</span>
+          <span class="stack-pill">Python</span><span class="stack-pill">API REST</span>
+          <span class="stack-pill">SHA-256</span><span class="stack-pill">SMTP</span>
+          <span class="stack-pill">Ingeniería Social</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- P6 -->
+    <div class="project-card fade-up">
+      <div class="project-header">
+        <span class="project-num">06</span>
+        <div class="project-badges">
+          <span class="badge b-cyan">Forense</span><span class="badge b-blue">Insider Threat</span>
+        </div>
+      </div>
+      <div class="project-body">
+        <h3>Investigación Forense — Fuga de Información Corporativa</h3>
+        <p class="project-desc">Análisis forense completo sobre imagen de disco real (NIST CFReDS). Escenario de insider threat: empleado exfiltró documentos confidenciales vía USB, CD y Google Drive personal. Evidencias: historial de navegación, correos con cómplice, archivos borrados recuperados, carta de renuncia y uso de CCleaner para destruir pruebas. 33 vectores documentados.</p>
+        <div class="project-stack">
+          <span class="stack-pill">Autopsy 4.22</span><span class="stack-pill">EnCase</span>
+          <span class="stack-pill">NIST CFReDS</span><span class="stack-pill">Windows 7</span>
+          <span class="stack-pill">Análisis de artefactos</span><span class="stack-pill">Recuperación de archivos</span>
+          <span class="stack-pill">Forense digital</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- P7 -->
+    <div class="project-card fade-up">
+      <div class="project-header">
+        <span class="project-num">07</span>
+        <div class="project-badges">
+          <span class="badge b-orange">Pentesting</span><span class="badge b-purple">OWASP</span>
+        </div>
+      </div>
+      <div class="project-body">
+        <h3>Auditoría de Seguridad Web — DVWA</h3>
+        <p class="project-desc">Despliegue de entorno DVWA con Docker + Kali Linux como atacante. Auditoría completa con metodología OWASP Top 10: SQL Injection, XSS, CSRF y Broken Authentication. Informe con hallazgos, severidad CVSS y recomendaciones.</p>
+        <div class="project-stack">
+          <span class="stack-pill">Kali Linux</span><span class="stack-pill">Burp Suite</span>
+          <span class="stack-pill">DVWA</span><span class="stack-pill">Docker</span>
+          <span class="stack-pill">OWASP</span><span class="stack-pill">CVSS</span>
+          <span class="stack-pill">SQLi / XSS</span>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
+
+<div class="divider"></div>
 
 <!-- FORMACIÓN -->
 <section id="formacion">
-  <div class="section-header fade-up">
-    <span class="section-num">04</span>
-    <h2 class="section-title">Formación</h2>
-    <div class="section-line"></div>
-  </div>
-  <div class="timeline">
-    <div class="timeline-item fade-up">
-      <div class="timeline-date">2025 — presente</div>
-      <div class="timeline-line"><div class="timeline-dot"></div></div>
-      <div class="timeline-content">
-        <div class="timeline-title">Máster en Ciberseguridad</div>
-        <div class="timeline-sub">Cámara de Comercio de Sevilla · Campus Cámara FP</div>
-        <div class="timeline-desc">Análisis de vulnerabilidades, criptografía aplicada, seguridad en redes, pentesting y automatización. Uso intensivo de Kali Linux, GNS3, Docker, Fail2ban y entornos de laboratorio reales.</div>
+  <div class="section-label">Educación & Certificaciones</div>
+  <h2>Formación</h2>
+  <div class="edu-list">
+    <div class="edu-item fade-up">
+      <div>
+        <div class="edu-degree">Máster en Ciberseguridad</div>
+        <div class="edu-school">Campus Cámara FP · Cámara de Comercio de Sevilla</div>
+        <span class="edu-badge">✓ Finalizado</span>
       </div>
+      <div class="edu-year">2025 — 2026</div>
     </div>
-    <div class="timeline-item fade-up">
-      <div class="timeline-date">2023 — 2025</div>
-      <div class="timeline-line"><div class="timeline-dot"></div></div>
-      <div class="timeline-content">
-        <div class="timeline-title">CFGS Desarrollo de Aplicaciones Web (DAW)</div>
-        <div class="timeline-sub">CESUR, Sevilla</div>
-        <div class="timeline-desc">Arquitectura cliente-servidor, APIs REST, bases de datos SQL, Git/GitHub. Proyectos con Laravel, Angular, PHP y MariaDB. Autenticación, control de errores y despliegue en entornos de prueba.</div>
+    <div class="edu-item fade-up">
+      <div>
+        <div class="edu-degree">CFGS Desarrollo de Aplicaciones Web (DAW)</div>
+        <div class="edu-school">CESUR, Sevilla</div>
+        <span class="edu-badge">✓ Finalizado</span>
       </div>
+      <div class="edu-year">2023 — 2025</div>
     </div>
-    <div class="timeline-item fade-up">
-      <div class="timeline-date">2026</div>
-      <div class="timeline-line"><div class="timeline-dot" style="background:var(--blue);box-shadow:0 0 12px var(--blue)"></div></div>
-      <div class="timeline-content">
-        <div class="timeline-title">Aptis ESOL — Inglés B2</div>
-        <div class="timeline-sub">British Council</div>
-        <div class="timeline-desc">Certificación oficial de inglés nivel B2 por el British Council.</div>
+    <div class="edu-item fade-up">
+      <div>
+        <div class="edu-degree">Inglés B2 — Aptis ESOL</div>
+        <div class="edu-school">British Council</div>
+        <span class="edu-badge">✓ Certificado</span>
       </div>
+      <div class="edu-year">2026</div>
+    </div>
+    <div class="edu-item fade-up">
+      <div>
+        <div class="edu-degree">Análisis de tráfico con Wireshark · Grafana + Loki · Introducción a Azure</div>
+        <div class="edu-school">OpenWebinars</div>
+      </div>
+      <div class="edu-year">2025</div>
     </div>
   </div>
 </section>
+
+<div class="divider"></div>
 
 <!-- CONTACTO -->
 <section id="contacto">
-  <div class="section-header fade-up" style="justify-content:center;text-align:center">
-    <span class="section-num">05</span>
-    <h2 class="section-title">Contacto</h2>
-  </div>
-  <p class="contact-subtitle fade-up">¿Hablamos? Estoy disponible para oportunidades junior en ciberseguridad.</p>
-  <a href="mailto:paulaescuderogc6@gmail.com" class="contact-email fade-up">paulaescuderogc6@gmail.com</a>
-  <div class="contact-links fade-up">
-    <a href="https://linkedin.com/in/paula-escudero-garcia" class="contact-link" target="_blank">in LinkedIn</a>
-    <a href="https://github.com/paulaescudero" class="contact-link" target="_blank">⌗ GitHub</a>
-    <a href="CV_Paula_Escudero.pdf" class="contact-link">↓ Descargar CV</a>
+  <div class="contact-wrapper">
+    <div class="contact-left fade-up">
+      <div class="section-label">Disponible para trabajar</div>
+      <h2>Hablamos</h2>
+      <p>Busco mi primer rol como analista SOC o blue team en Sevilla o remoto. Si tienes una oportunidad o quieres hablar de ciberseguridad, escríbeme.</p>
+      <div class="contact-links">
+        <a href="mailto:paulaescuderogc6@gmail.com" class="contact-link">
+          <span class="contact-icon">✉️</span>
+          <div><div>paulaescuderogc6@gmail.com</div><div class="contact-detail">Email principal</div></div>
+        </a>
+        <a href="https://linkedin.com/in/paula-escudero-garcia" target="_blank" class="contact-link">
+          <span class="contact-icon">💼</span>
+          <div><div>linkedin.com/in/paula-escudero-garcia</div><div class="contact-detail">LinkedIn</div></div>
+        </a>
+        <a href="https://github.com/paulaescudero6" target="_blank" class="contact-link">
+          <span class="contact-icon">⚡</span>
+          <div><div>github.com/paulaescudero6</div><div class="contact-detail">GitHub · proyectos y labs</div></div>
+        </a>
+        <a href="tel:+34662918031" class="contact-link">
+          <span class="contact-icon">📍</span>
+          <div><div>662 918 031</div><div class="contact-detail">Sevilla, España</div></div>
+        </a>
+      </div>
+    </div>
+
+    <div class="terminal fade-up">
+      <div class="terminal-bar">
+        <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
+        <span class="terminal-title">paula@kali ~ </span>
+      </div>
+      <div class="terminal-body">
+        <div><span class="t-comment"># Estado actual</span></div>
+        <div><span class="t-path">paula@kali</span>:~$ cat status.json</div>
+        <div style="margin-top:4px">
+          <div><span class="t-comment">{</span></div>
+          <div>&nbsp;&nbsp;<span class="t-cmd">"rol"</span>: <span class="t-output">"SOC Analyst Jr."</span>,</div>
+          <div>&nbsp;&nbsp;<span class="t-cmd">"ubicacion"</span>: <span class="t-output">"Sevilla / Remoto"</span>,</div>
+          <div>&nbsp;&nbsp;<span class="t-cmd">"disponible"</span>: <span class="t-output">true</span>,</div>
+          <div>&nbsp;&nbsp;<span class="t-cmd">"ingles"</span>: <span class="t-output">"B2 Aptis ESOL"</span>,</div>
+          <div>&nbsp;&nbsp;<span class="t-cmd">"open_to"</span>: [</div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-output">"SOC Analyst"</span>,</div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-output">"Blue Team"</span>,</div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-output">"Security Engineer Jr."</span></div>
+          <div>&nbsp;&nbsp;]</div>
+          <div><span class="t-comment">}</span></div>
+        </div>
+        <div style="margin-top:8px"><span class="t-path">paula@kali</span>:~$ <span class="t-cursor"></span></div>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- FOOTER -->
+<div class="divider"></div>
 <footer>
-  <span>© 2026 <span class="accent">Paula Escudero García</span></span>
-  <span>Diseñado y desarrollado con ♥ en Sevilla</span>
+  <span>© 2026 Paula Escudero García</span>
+  <span>paulaescudero.es · Sevilla</span>
 </footer>
 
 <script>
-  // Custom cursor
-  const cursor = document.getElementById('cursor');
-  const ring = document.getElementById('cursorRing');
-  let mx = 0, my = 0, rx = 0, ry = 0;
-  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-  function animateCursor() {
-    cursor.style.left = mx - 6 + 'px';
-    cursor.style.top = my - 6 + 'px';
-    rx += (mx - rx) * 0.15;
-    ry += (my - ry) * 0.15;
-    ring.style.left = rx - 18 + 'px';
-    ring.style.top = ry - 18 + 'px';
-    requestAnimationFrame(animateCursor);
-  }
-  animateCursor();
-
-  // Scroll animations
   const observer = new IntersectionObserver(entries => {
     entries.forEach((e, i) => {
-      if (e.isIntersecting) {
-        setTimeout(() => e.target.classList.add('visible'), i * 80);
-      }
+      if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 80);
     });
   }, { threshold: 0.1 });
   document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
-  // Typing effect in terminal (already static, but add blink)
-  // Nav highlight on scroll
+  // Nav highlight
   const sections = document.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('.nav-links a');
+  const links = document.querySelectorAll('.nav-links a');
   window.addEventListener('scroll', () => {
-    let current = '';
-    sections.forEach(s => {
-      if (window.scrollY >= s.offsetTop - 200) current = s.id;
-    });
-    navLinks.forEach(a => {
-      a.style.color = a.getAttribute('href') === '#' + current ? 'var(--accent)' : '';
-    });
+    let cur = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 200) cur = s.id; });
+    links.forEach(a => { a.style.color = a.getAttribute('href') === '#' + cur ? 'var(--text)' : ''; });
   });
 </script>
 </body>
